@@ -70,9 +70,14 @@ main {
     bottom: 10%;
     left: 50%;
     width: 65%;
-    transform: translate(-57%, 0);
+    transform: translate(-57%, -100%);
     display: flex;
     gap: 20px;
+}
+
+.judi {
+    color: #f35d5d;
+    transform: translate(-5%, -250%);
 }
 
 .button {
