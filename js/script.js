@@ -1,5 +1,7 @@
 const pokemonName = document.querySelector('.pokemon__name');
 const pokemonNumber = document.querySelector('.pokemon__number');
+const pokemonType = document.querySelector('.pokemon__type');
+const pokemonWeight = document.querySelector('.pokemon__weight');
 const pokemonImage = document.querySelector('.pokemon__image');
 
 const form = document.querySelector('.form');
@@ -9,7 +11,7 @@ const buttonNext = document.querySelector('.btn-next');
 
 let searchPokemon = 1;
 
-//Llama a la api para obtener la informacion de pokemon y devulve los datos obtenidos.
+// Llama a la API para obtener la información del Pokémon y devuelve los datos obtenidos.
 const fetchPokemon = async(pokemon) => {
     const APIResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
 
@@ -17,13 +19,37 @@ const fetchPokemon = async(pokemon) => {
         const data = await APIResponse.json();
         return data;
     }
-}
+};
 
-//permite mostrar la informacion del pokemon obtenida desde fetchPokemon
+//traducciones de tipos de pokemon 
+const typeTranslations = {
+    normal: 'Normal',
+    fighting: 'Lucha',
+    flying: 'Volador',
+    poison: 'Veneno',
+    ground: 'Tierra',
+    rock: 'Roca',
+    bug: 'Bicho',
+    ghost: 'Fantasma',
+    steel: 'Acero',
+    fire: 'Fuego',
+    water: 'Agua',
+    grass: 'Planta',
+    electric: 'Eléctrico',
+    psychic: 'Psíquico',
+    ice: 'Hielo',
+    dragon: 'Dragón',
+    dark: 'Siniestro',
+    fairy: 'Hada',
+};
+
+
+// Permite mostrar la información del Pokémon obtenida desde fetchPokemon
 const renderPokemon = async(pokemon) => {
-
-    pokemonName.innerHTML = 'Loading...';
+    pokemonName.innerHTML = 'Cargando...';
     pokemonNumber.innerHTML = '';
+    pokemonType.innerHTML = '';
+    pokemonWeight.innerHTML = '';
 
     const data = await fetchPokemon(pokemon);
 
@@ -31,23 +57,30 @@ const renderPokemon = async(pokemon) => {
         pokemonImage.style.display = 'block';
         pokemonName.innerHTML = data.name;
         pokemonNumber.innerHTML = data.id;
-        pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
+        const typeName = data.types[0].type.name;
+        const typeTranslation = typeTranslations[typeName] || typeName;
+        pokemonType.innerHTML = `Tipo: ${typeTranslation}`;
+        pokemonWeight.innerHTML = `Peso: ${data.weight / 10} kg`;
+        pokemonImage.src =
+            data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
         input.value = '';
         searchPokemon = data.id;
     } else {
         pokemonImage.style.display = 'none';
-        pokemonName.innerHTML = 'Not found :c';
+        pokemonName.innerHTML = 'No encontrado :c';
         pokemonNumber.innerHTML = '';
+        pokemonType.innerHTML = '';
+        pokemonWeight.innerHTML = '';
     }
-}
+};
 
-//Evita que recargue la pagina al hacer enter y llama a la funcion renderPokemon para mostrar los nuevos datos 
+// Evita que recargue la página al hacer enter y llama a la función renderPokemon para mostrar los nuevos datos
 form.addEventListener('submit', (event) => {
     event.preventDefault();
     renderPokemon(input.value.toLowerCase());
 });
 
-//pasa al pokemon anterior si es mayor que 1 
+// Pasa al Pokémon anterior si es mayor que 1
 buttonPrev.addEventListener('click', () => {
     if (searchPokemon > 1) {
         searchPokemon -= 1;
@@ -55,10 +88,15 @@ buttonPrev.addEventListener('click', () => {
     }
 });
 
-//pasa al siguiente pokemon incrementando en 1 el valor
+// Pasa al siguiente Pokémon incrementando en 1 el valor
 buttonNext.addEventListener('click', () => {
     searchPokemon += 1;
     renderPokemon(searchPokemon);
 });
+
+// Cambia a mayuscula la primera letra de una cadena
+const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 renderPokemon(searchPokemon);

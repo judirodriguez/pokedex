@@ -18,29 +18,33 @@
 <body>
 
     <main>
-        <div>
-            <img src="#" alt="pokemon" class="pokemon__image">
-            <!--el atributo alt nos sirve para dar un texto alternativo a la imagen
+
+        <img src="#" alt="pokemon" class="pokemon__image">
+        <!--el atributo alt nos sirve para dar un texto alternativo a la imagen
         en caso de que no cargue y tambien para los lectores de pantalla(accesibilidad) -->
 
-            <h1 class="pokemon__data">
-                <span class="pokemon__number"></span> -
-                <span class="pokemon__name"></span>
-            </h1>
 
-            <form class="form">
-                <input type="search" class="input__search" placeholder="ingresa un nombre o un numero" required />
-            </form>
+        <h1 class="pokemon__data">
+            <span class="pokemon__number"></span> -
+            <span class="pokemon__name"></span>
+            <br><span class="pokemon__type"></span>
+            <span class="pokemon__weight"></span>
+        </h1>
 
-            <div class="buttons">
-                <button class="button btn-prev">Anterior &lt;</button>
-                <button class="button btn-next">Siguiente &gt;</button>
-            </div>
 
-            <img src="images/image-pokedex.png" alt="pokedex" class="pokedex">
+        <form class="form">
+            <input type="search" id="scan" class="input__search" placeholder="ingresa un nombre o un numero" required />
+        </form>
+
+        <div class="buttons">
+            <button class="button btn-prev">Anterior &lt;</button>
+            <button class="button btn-next">Siguiente &gt;</button>
+        </div>
+
+        <img src="images/image-pokedex.png" alt="pokedex" class="pokedex">
         </div>
         <div>
-            <h4 class="judi">Creado por Judiza Rodriguez</h4>
+            <h4 class="judi">Por Judiza Rodriguez</h4>
         </div>
     </main>
 
